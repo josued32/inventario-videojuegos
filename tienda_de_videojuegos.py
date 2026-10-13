@@ -44,6 +44,9 @@ def mostrar_catalogo():
         
         for fila in lector:
             print(f"{fila[0]:<30} {fila[1]:<15} {fila[2]:<10} {fila[3]:<10}")
+
+def buscar_videojuego():
+    print("buscando")
 while True:
     print("=========================")
     print("    TIENDA DE VIDEOJUEGOS")
@@ -62,6 +65,7 @@ while True:
         mostrar_catalogo()
     elif opcion == "2":
         print("Buscar videojuego")
+        buscar_videojuego()
     elif opcion == "3":
         print("Agregar videojuego")
         agregar_videojuego()

@@ -1,0 +1,5 @@
+git init 
+git config --global user.email "josued32"
+git config --global user.name "Josue Dominguez" 
+git add tienda_de_videojuegos.py 
+git commit -m "Commit inicial: código base con menú y función de agregar"  

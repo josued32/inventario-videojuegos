@@ -1,15 +1,49 @@
+import os
 import csv
+
 def agregar_videojuego():
-    titulo = input("Titulo: ")
+    print("\n--- Agregar Videojuego ---")
+    titulo = input("Título: ")
     plataforma = input("Plataforma: ")
     precio = input("Precio: ")
-    existencias = input("Existencias")
+    existencias = input("Existencias: ") # Añadidos dos puntos y espacio
     
-    with open("videojuegos.csv", "a", newline="", encoding="utf-8") as archivo:
+    # Verificamos si el archivo ya existe antes de abrirlo
+    nombre_archivo = "videojuegos.csv"
+    archivo_existe = os.path.exists(nombre_archivo)
+    
+    # Abrimos el archivo en modo append ('a')
+    with open(nombre_archivo, "a", newline="", encoding="utf-8") as archivo:
         escritor = csv.writer(archivo)
+        
+        # Si el archivo NO existe, escribimos la cabecera primero
+        if not archivo_existe:
+            escritor.writerow(["Titulo", "Plataforma", "Precio", "Existencias"])
+            
+        # Escribimos los datos ingresados por el usuario
         escritor.writerow([titulo, plataforma, precio, existencias])
+        
+    print("¡Videojuego guardado en el archivo exitosamente!")
 
-
+def mostrar_catalogo():
+    print("\n--- Catálogo de Videojuegos ---")
+    nombre_archivo = "videojuegos.csv"
+    
+    # Verificamos si el archivo existe antes de intentar leerlo
+    if not os.path.exists(nombre_archivo):
+        print("No hay videojuegos en el catálogo.")
+        return
+    
+    with open(nombre_archivo, "r", newline="", encoding="utf-8") as archivo:
+        lector = csv.reader(archivo)
+        encabezados = next(lector, None)  # Leemos la primera fila como encabezados
+        
+        if encabezados:
+            print(f"{encabezados[0]:<30} {encabezados[1]:<15} {encabezados[2]:<10} {encabezados[3]:<10}")
+            print("-" * 70)
+        
+        for fila in lector:
+            print(f"{fila[0]:<30} {fila[1]:<15} {fila[2]:<10} {fila[3]:<10}")
 while True:
     print("=========================")
     print("    TIENDA DE VIDEOJUEGOS")
@@ -25,6 +59,7 @@ while True:
 
     if opcion == "1":
         print("Mostrar catálogo")
+        mostrar_catalogo()
     elif opcion == "2":
         print("Buscar videojuego")
     elif opcion == "3":

@@ -46,7 +46,35 @@ def mostrar_catalogo():
             print(f"{fila[0]:<30} {fila[1]:<15} {fila[2]:<10} {fila[3]:<10}")
 
 def buscar_videojuego():
-    print("buscando")
+    print("\n--- Buscar Videojuego ---")
+    nombre_archivo = "videojuegos.csv"
+    
+    # Verificamos si el archivo existe antes de buscar
+    if not os.path.exists(nombre_archivo):
+        print("No hay un catálogo registrado para realizar búsquedas.")
+        return
+
+    juego_buscado = input("Introduce el título del videojuego a buscar: ").strip().lower()
+    coincidencias = []
+
+    with open(nombre_archivo, "r", newline="", encoding="utf-8") as archivo:
+        lector = csv.reader(archivo)
+        encabezados = next(lector, None)
+        
+        for fila in lector:
+            if juego_buscado in fila[0].lower():
+                coincidencias.append(fila)
+
+        if coincidencias:
+            print(f"\nSe encontraron {len(coincidencias)} resultado(s):")
+            if encabezados:
+                print(f"{encabezados[0]:<30} {encabezados[1]:<15} {encabezados[2]:<10} {encabezados[3]:<10}")
+                print("-" * 70)
+            for fila in coincidencias:
+                print(f"{fila[0]:<30} {fila[1]:<15} {fila[2]:<10} {fila[3]:<10}")
+        else:
+            print(f"No se encontró ningún videojuego que coincida con '{termino_busqueda}'.")
+
 while True:
     print("=========================")
     print("    TIENDA DE VIDEOJUEGOS")
